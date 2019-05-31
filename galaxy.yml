@@ -1,0 +1,12 @@
+namespace: "chrismeyersfsu"
+name: "tower_modules"
+version: "0.0.1"
+description: "Ansible Tower API modules."
+authors:
+  - "chris meyers <chris.meyers.fsu@gmail.com>"
+license:
+  - "GPL-3.0-only"
+readme: README.md
+tags: []
+dependencies: {}
+
