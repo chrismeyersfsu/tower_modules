@@ -16,7 +16,7 @@
 
 - name: Create a Job Template
   tower_job_template:
-    name: hello-world
+    name: "hello-world {{ lookup('randstr') }}"
     project: Job Template Test Project
     inventory: Demo Inventory
     playbook: hello_world.yml

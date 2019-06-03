@@ -19,7 +19,7 @@
 
 - name: Create a source inventory
   tower_inventory_source:
-    name: source-test-inventory
+    name: "source-test-inventory {{ lookup('randstr') }}"
     description: Source for Test inventory
     inventory: openstack-test-inventory
     credential: openstack-test-credential
