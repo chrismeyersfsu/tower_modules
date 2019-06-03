@@ -9,10 +9,20 @@
     line: '{"foo": "bar"}'
     create: true
 
+- name: Generate an inventory name
+  set_fact:
+    inv_name: "inv-for-group-{{ lookup('randstr') }}"
+
+- name: Create an Inventory
+  tower_inventory:
+    name: "{{ inv_name }}"
+    organization: Default
+    state: present
+
 - name: Create a Host
   tower_host:
     name: "some-host"
-    inventory: "Demo Inventory"
+    inventory: "{{ inv_name }}"
     state: present
     variables: "@{{ tempdir.stdout }}/vars"
   register: result
@@ -24,7 +34,7 @@
 - name: Delete a Host
   tower_host:
     name: "some-host"
-    inventory: "Demo Inventory"
+    inventory: "{{ inv_name }}"
     state: absent
   register: result
 

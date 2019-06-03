@@ -26,15 +26,19 @@
     that:
       - "result is changed"
 
+- name: Generate manual project dir name
+  set_fact:
+    project_dir_name: "proj_{{ lookup('randstr') }}"
+
 - name: create a project directory for manual project
   import_tasks: create_project_dir.yml
 
 - name: Create a manual project
   tower_project:
-    name: manual project
+    name: "manual project {{ lookup('randstr') }}"
     organization: Default
     scm_type: manual
-    local_path: "manual_test_project"
+    local_path: "{{ project_dir_name }}"
   register: result
 
 - assert:
@@ -64,9 +68,13 @@
     - TestOrg2
     - TestOrg1
 
+- name: Generate random project name appender
+  set_fact:
+    project_name_rand: "{{ lookup('randstr') }}"
+
 - name: Create project TestProject
   tower_project:
-    name: TestProject
+    name: "TestProject {{ project_name_rand }}"
     organization: TestOrg1
     scm_type: git
     scm_url: "https://github.com/ansible/ansible"
@@ -79,7 +87,7 @@
 
 - name: Check module fails with correct msg
   tower_project:
-    name: TestProject
+    name: "TestProject {{ project_name_rand }}"
     organization: Non Existing Org
     scm_type: git
     scm_url: "https://github.com/ansible/ansible"
@@ -93,7 +101,7 @@
 
 - name: Check module fails with correct msg
   tower_project:
-    name: TestProject
+    name: "TestProject {{ project_name_rand }}"
     organization: TestOrg1
     scm_type: git
     scm_url: "https://github.com/ansible/ansible"
