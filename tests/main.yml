@@ -4,7 +4,7 @@
   vars:
     tower_host: "{{ lookup('ENV', 'TOWER_HOST') }}"
     tower_username: "{{ lookup('ENV', 'TOWER_USERNAME') }}"
-    tower_password: "{{ lookup('ENV', 'TOWER_PASSOWRD') }}"
+    tower_password: "{{ lookup('ENV', 'TOWER_PASSWORD') }}"
   collections:
     - ansible_tower.tower_modules
   tasks:
