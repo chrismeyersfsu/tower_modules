@@ -6,7 +6,7 @@
 
 - assert:
     that:
-      - "result.tower_version == '{{ tower_version }}'"
+      - "result.tower_version is defined"
 
 - name: Make sure the default Default organization exists
   tower_organization:
