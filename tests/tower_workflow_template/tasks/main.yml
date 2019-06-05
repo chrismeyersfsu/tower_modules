@@ -25,7 +25,7 @@
     force_basic_auth: true
     return_content: true
   register: result
-  until: result.json.sumimary_fields.last_update is defined and result.json.summary_fields.last_update.status == "successful"
+  until: result.json.summary_fields.last_update is defined and result.json.summary_fields.last_update.status == "successful"
   retries: 60
   delay: 1
 
