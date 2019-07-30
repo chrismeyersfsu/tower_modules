@@ -1,12 +1,20 @@
-namespace: "chrismeyersfsu"
-name: "tower_modules"
-version: "0.0.1"
-description: "Ansible Tower API modules."
+namespace: "ansible"
+name: "tower"
+version: "0.0.2"
+description: "Ansible Tower modules used to interact with the Tower and AWX API."
 authors:
   - "chris meyers <chris.meyers.fsu@gmail.com>"
 license:
   - "GPL-3.0-only"
 readme: README.md
-tags: []
+tags:
+  - collection
+  - ansible
+  - tower
+  - api
+  - web
 dependencies: {}
-
+repository: https://github.com/ansible/collection_tower
+documentation: https://docs.ansible.com/ansible/latest/modules/list_of_web_infrastructure_modules.html#ansible-tower
+homepage: https://ansible.com
+repository: https://github.com/ansible/collection_tower/issues

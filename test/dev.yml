@@ -1,0 +1,9 @@
+---
+# Useful for inoking tower modules when developing
+- hosts: localhost
+  gather_facts: false
+  collections:
+    - tower.tower
+  tasks:
+    - tower_organization:
+        name: "My Org"

@@ -96,7 +96,7 @@ status:
 '''
 
 
-from ansible.module_utils.ansible_tower import TowerModule, tower_auth_config, tower_check_mode
+from ansible_collections.ansible.tower.plugins.module_utils.ansible_tower import TowerModule, tower_auth_config, tower_check_mode
 
 try:
     import tower_cli
