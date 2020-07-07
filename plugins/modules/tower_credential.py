@@ -55,10 +55,11 @@ options:
         - The ssh choice refers to a Tower Machine credential.
       required: True
       type: str
-      choices: ["ssh", "vault", "net", "scm", "aws", "vmware", "satellite6", "cloudforms", "gce", "azure_rm", "openstack", "rhv", "insights", "tower"]
+      choices: ["ssh", "vault", "net", "scm", "aws", "vmware", "satellite6", "cloudforms", "gce", "azure_rm", "openstack", "rhv", "insights", "tower", "kubernetes_bearer_token"]
     host:
       description:
         - Host for this credential.
+        - For C(kubernetes_bearer_token), this should be the full URL of the K8s api server
       type: str
     username:
       description:
@@ -134,6 +135,18 @@ options:
         - This parameter is only valid if C(kind) is specified as C(vault).
       type: str
       version_added: "2.8"
+    bearer_token:
+      description:
+        - Kubernetes Service Account's bearer token
+        - fetch via `kubectl get secrets`, then base64-decode
+        - This parameter is only valid if C(kind) is specified as C(kubernetes_bearer_token).
+      type: str
+    ssl_ca_cert:
+      description:
+        - Kubernetes cluster's CA cert
+        - fetch via `kubectl get secrets`, then base64-decode
+        - This parameter is only valid if C(kind) is specified as C(kubernetes_bearer_token).
+      type: str
     state:
       description:
         - Desired state of the resource.
@@ -207,6 +220,7 @@ KIND_CHOICES = {
     'rhv': 'Red Hat Virtualization',
     'insights': 'Insights',
     'tower': 'Ansible Tower',
+    'kubernetes_bearer_token': 'OpenShift or Kubernetes API Bearer Token',
 }
 
 
@@ -219,6 +233,8 @@ def credential_type_for_v1_kind(params, module):
             arguments['kind'] = 'vault'
         else:
             arguments['kind'] = 'ssh'
+    elif kind == 'kubernetes_bearer_token':
+        arguments['kind'] = 'kubernetes'
     elif kind in ('net', 'scm', 'insights', 'vault'):
         arguments['kind'] = kind
     elif kind in KIND_CHOICES:
@@ -259,6 +275,8 @@ def main():
         project=dict(),
         state=dict(choices=['present', 'absent'], default='present'),
         vault_id=dict(),
+        bearer_token=dict(no_log=True),
+        ssl_ca_cert=dict(),
     )
 
     module = TowerModule(argument_spec=argument_spec, supports_check_mode=True)
@@ -329,7 +347,7 @@ def main():
                         'domain', 'become_method', 'become_username',
                         'become_password', 'vault_password', 'project', 'host',
                         'username', 'password', 'ssh_key_data', 'vault_id',
-                        'ssh_key_unlock'):
+                        'ssh_key_unlock', 'bearer_token', 'ssl_ca_cert'):
                 if 'kind' in params:
                     params[key] = module.params.get(key)
                 elif module.params.get(key):
